@@ -1,64 +1,94 @@
+/**
+ * GAME CORE
+ */
 const CHOICES = ["rock", "paper", "scissors"]
 
 let counting = [0, 0, 0] //would be DRAWS / LOSSES / WINS
+let games = 0
 
-for (let i = 0; i < 5; i++) {
-    
-    let userChoice = prompt("Welcome to rock, paper, scissors. Please choose your decission").toLowerCase();
+const playGame = (userChoice)=>{
+
     let computerChoice = CHOICES[Math.floor(Math.random()*3)]
     
-
-    computerChoice
-    
     if (userChoice == "rock") {
+        console.log(userChoice)
         switch (computerChoice) {
             case "rock":
-                console.log(`Your choice was ${userChoice}, computer choice was: ${computerChoice}, therefore it's a draw`)
                 counting[0]++
-                break;
+                games++
+                return `Computer choose ${computerChoice.toUpperCase()}, therefore you draw`
             case "paper":
-                console.log(`Your choice was ${userChoice}, computer choice was: ${computerChoice} therefore you lose`)
                 counting[1]++
-                break;
+                games++
+                return `Computer choose ${computerChoice.toUpperCase()}, therefore you lose`
             case "scissors":
-                console.log(`Your choice was ${userChoice}, computer choice was: ${computerChoice} therefore you won`)
                 counting[2]++
-                break;
+                games++
+                return `Computer choose ${computerChoice.toUpperCase()}, therefore you win`
         }
     } else if (userChoice == "paper"){
+        console.log(userChoice)
         switch (computerChoice) {
             case "rock":
-                console.log(`Your choice was ${userChoice}, computer choice was: ${computerChoice} therefore you won`)
                 counting[2]++
-                break;
+                games++
+                return `Computer choose ${computerChoice.toUpperCase()}, therefore you win`
             case "paper":
-                console.log(`Your choice was ${userChoice}, computer choice was: ${computerChoice}, therefore it's a draw`)
                 counting[0]++
-                break;
+                games++
+                return `Computer choose ${computerChoice.toUpperCase()}, therefore you draw`
             case "scissors":
-                console.log(`Your choice was ${userChoice}, computer choice was: ${computerChoice} therefore you lose`)
                 counting[1]++
-                break;
+                games++
+                return `Computer choose ${computerChoice.toUpperCase()}, therefore you lose`
         }
     } else if (userChoice == "scissors"){
+        console.log(userChoice)
         switch (computerChoice) {
             case "rock":
-                console.log(`Your choice was ${userChoice}, computer choice was: ${computerChoice} therefore you lose`)
                 counting[1]++
-                break;
+                games++
+                return `Computer choose ${computerChoice.toUpperCase()}, therefore you lose`
             case "paper":
-                console.log(`Your choice was ${userChoice}, computer choice was: ${computerChoice} therefore you won`)
                 counting[2]++
-                break;
+                games++
+                return `Computer choose ${computerChoice.toUpperCase()}, therefore you win`
             case "scissors":
-                console.log(`Your choice was ${userChoice}, computer choice was: ${computerChoice}, therefore it's a draw`)
                 counting[0]++
-                break;
+                games++
+                return `Computer choose ${computerChoice.toUpperCase()}, therefore you draw`
         }
-    } else {
-        window.location.reload()
-        break
     }
 }
 
-console.log(`You finnished, these are the results: ${counting[0]} draws, ${counting[1]} losses and ${counting[2]} wins`)
+/**
+ * DOM ELEMENTS
+ 0*/
+ const choicesElement = Array.from(document.getElementsByClassName('choices__element'))
+ const result = document.querySelector('#result__text')
+ const container = document.getElementsByClassName('container')[0]
+
+//Create restart button
+
+const restartBtn = document.createElement('button')
+restartBtn.classList.add('restart')
+restartBtn.innerText = 'Restart game!'
+restartBtn.addEventListener('click', (e)=>{
+    games = 0
+    counting = [0,0,0]
+    result.textContent = 'Play Game'
+    e.target.remove()
+})
+
+/**
+ * DOM MODIFICATIONS
+ */
+
+choicesElement.forEach(choice => choice.addEventListener('click', (e)=>{
+    if(games < 5) {
+        result.textContent = playGame(e.target.dataset.choice)
+    } else{
+        result.textContent = `RESULTS: ${counting[0]} DRAWS, ${counting[1]} LOSSES, ${counting[2]} WINS`
+        container.append(restartBtn)
+    }
+}))
