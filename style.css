@@ -47,3 +47,22 @@ body{
     color: #fff;
     transform: scale(1.1);
 }
+.restart{
+    background-color: rgb(53, 53, 53);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+
+    transition: all 0.3s ease-in;
+
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.restart:hover{
+    background-color: #fff;
+    color: rgb(53, 53, 53);
+    transform: scale(1.1) translateX(-45%);
+}
